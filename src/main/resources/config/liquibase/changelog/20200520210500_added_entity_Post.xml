@@ -18,7 +18,10 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="content" type="varchar(255)">
+            <column name="content" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="content_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -56,7 +59,8 @@
                   tableName="post">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
-            <column name="content" type="string"/>
+            <column name="content" type="blob"/>
+            <column name="content_content_type" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

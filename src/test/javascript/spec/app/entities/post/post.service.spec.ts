@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(PostService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Post(0, 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Post(0, 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {

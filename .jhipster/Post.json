@@ -10,7 +10,8 @@
         },
         {
             "fieldName": "content",
-            "fieldType": "String"
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
         }
     ],
     "relationships": [

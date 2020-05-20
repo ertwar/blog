@@ -1,6 +1,6 @@
 entity Post {
 	title String required,
-	content String
+	content Blob
 }
 
 entity Tag {

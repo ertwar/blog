@@ -27,8 +27,12 @@ public class Post implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Lob
     @Column(name = "content")
-    private String content;
+    private byte[] content;
+
+    @Column(name = "content_content_type")
+    private String contentContentType;
 
     @ManyToMany
     @JoinTable(name = "post_tag",
@@ -58,17 +62,30 @@ public class Post implements Serializable {
         this.title = title;
     }
 
-    public String getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public Post content(String content) {
+    public Post content(byte[] content) {
         this.content = content;
         return this;
     }
 
-    public void setContent(String content) {
+    public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public String getContentContentType() {
+        return contentContentType;
+    }
+
+    public Post contentContentType(String contentContentType) {
+        this.contentContentType = contentContentType;
+        return this;
+    }
+
+    public void setContentContentType(String contentContentType) {
+        this.contentContentType = contentContentType;
     }
 
     public Set<Tag> getTags() {
@@ -119,6 +136,7 @@ public class Post implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", content='" + getContent() + "'" +
+            ", contentContentType='" + getContentContentType() + "'" +
             "}";
     }
 }

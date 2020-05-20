@@ -2,6 +2,7 @@ import { browser, ExpectedConditions as ec, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { PostComponentsPage, PostDeleteDialog, PostUpdatePage } from './post.page-object';
+import * as path from 'path';
 
 const expect = chai.expect;
 
@@ -11,6 +12,9 @@ describe('Post e2e test', () => {
   let postComponentsPage: PostComponentsPage;
   let postUpdatePage: PostUpdatePage;
   let postDeleteDialog: PostDeleteDialog;
+  const fileNameToUpload = 'logo-jhipster.png';
+  const fileToUpload = '../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
+  const absolutePath = path.resolve(__dirname, fileToUpload);
 
   before(async () => {
     await browser.get('/');
@@ -42,12 +46,15 @@ describe('Post e2e test', () => {
 
     await promise.all([
       postUpdatePage.setTitleInput('title'),
-      postUpdatePage.setContentInput('content')
+      postUpdatePage.setContentInput(absolutePath)
       // postUpdatePage.tagSelectLastOption(),
     ]);
 
     expect(await postUpdatePage.getTitleInput()).to.eq('title', 'Expected Title value to be equals to title');
-    expect(await postUpdatePage.getContentInput()).to.eq('content', 'Expected Content value to be equals to content');
+    expect(await postUpdatePage.getContentInput()).to.endsWith(
+      fileNameToUpload,
+      'Expected Content value to be end with ' + fileNameToUpload
+    );
 
     await postUpdatePage.save();
     expect(await postUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

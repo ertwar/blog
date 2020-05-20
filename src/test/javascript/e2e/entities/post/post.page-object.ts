@@ -30,7 +30,7 @@ export class PostUpdatePage {
   cancelButton = element(by.id('cancel-save'));
 
   titleInput = element(by.id('field_title'));
-  contentInput = element(by.id('field_content'));
+  contentInput = element(by.id('file_content'));
 
   tagSelect = element(by.id('field_tag'));
 

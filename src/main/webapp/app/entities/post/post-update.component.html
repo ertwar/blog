@@ -25,8 +25,21 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="blogApp.post.content" for="field_content">Content</label>
-                    <input type="text" class="form-control" name="content" id="field_content"
+                    <div>
+                        <div *ngIf="editForm.get('content')!.value" class="form-text text-danger clearfix">
+                            <a class="pull-left" (click)="openFile(editForm.get('contentContentType')!.value, editForm.get('content')!.value)" jhiTranslate="entity.action.open">open</a><br>
+                            <span class="pull-left">{{ editForm.get('contentContentType')!.value }}, {{ byteSize(editForm.get('content')!.value) }}</span>
+                            <button type="button" (click)="editForm.patchValue({content: null});editForm.patchValue({contentContentType: null});"
+                                    class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon icon="times"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_content" (change)="setFileData($event, 'content', false)" jhiTranslate="entity.action.addblob"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="content" id="field_content"
                            formControlName="content"/>
+                    <input type="hidden" class="form-control" name="contentContentType" id="field_contentContentType"
+                           formControlName="contentContentType" />
                 </div>
 
                 <div class="form-group">

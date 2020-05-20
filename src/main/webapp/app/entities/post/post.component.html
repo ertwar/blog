@@ -33,7 +33,10 @@
                 <tr *ngFor="let post of posts ;trackBy: trackId">
                     <td><a [routerLink]="['/post', post.id, 'view']">{{ post.id }}</a></td>
                     <td>{{ post.title }}</td>
-                    <td>{{ post.content }}</td>
+                    <td>
+                        <a *ngIf="post.content" (click)="openFile(post.contentContentType, post.content)" jhiTranslate="entity.action.open">open</a>
+                        <span *ngIf="post.content">{{ post.contentContentType }}, {{ byteSize(post.content) }}</span>
+                    </td>
                     <td>
                         <span *ngFor="let tag of post.tags; let last = last">
                             <a class="form-control-static" [routerLink]="['/tag', tag?.id, 'view']">{{ tag.tagtext }}</a>{{ last ? '' : ', ' }}

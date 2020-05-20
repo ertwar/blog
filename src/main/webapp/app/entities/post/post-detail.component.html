@@ -14,7 +14,10 @@
                 </dd>
                 <dt><span jhiTranslate="blogApp.post.content">Content</span></dt>
                 <dd>
-                    <span>{{ post.content }}</span>
+                    <div *ngIf="post.content">
+                        <a (click)="openFile(post?.contentContentType!, post?.content)" jhiTranslate="entity.action.open">open</a>
+                        {{ post.contentContentType }}, {{ byteSize(post.content) }}
+                    </div>
                 </dd>
                 <dt><span jhiTranslate="blogApp.post.tag">Tag</span></dt>
                 <dd>

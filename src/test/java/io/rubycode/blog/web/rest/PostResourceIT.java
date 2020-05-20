@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,10 @@ public class PostResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
-    private static final String UPDATED_CONTENT = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_CONTENT = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_CONTENT = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_CONTENT_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_CONTENT_CONTENT_TYPE = "image/png";
 
     @Autowired
     private PostRepository postRepository;
@@ -66,7 +69,8 @@ public class PostResourceIT {
     public static Post createEntity(EntityManager em) {
         Post post = new Post()
             .title(DEFAULT_TITLE)
-            .content(DEFAULT_CONTENT);
+            .content(DEFAULT_CONTENT)
+            .contentContentType(DEFAULT_CONTENT_CONTENT_TYPE);
         return post;
     }
     /**
@@ -78,7 +82,8 @@ public class PostResourceIT {
     public static Post createUpdatedEntity(EntityManager em) {
         Post post = new Post()
             .title(UPDATED_TITLE)
-            .content(UPDATED_CONTENT);
+            .content(UPDATED_CONTENT)
+            .contentContentType(UPDATED_CONTENT_CONTENT_TYPE);
         return post;
     }
 
@@ -104,6 +109,7 @@ public class PostResourceIT {
         Post testPost = postList.get(postList.size() - 1);
         assertThat(testPost.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testPost.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testPost.getContentContentType()).isEqualTo(DEFAULT_CONTENT_CONTENT_TYPE);
     }
 
     @Test
@@ -156,7 +162,8 @@ public class PostResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(post.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
-            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)));
+            .andExpect(jsonPath("$.[*].contentContentType").value(hasItem(DEFAULT_CONTENT_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].content").value(hasItem(Base64Utils.encodeToString(DEFAULT_CONTENT))));
     }
     
     @SuppressWarnings({"unchecked"})
@@ -193,7 +200,8 @@ public class PostResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(post.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT));
+            .andExpect(jsonPath("$.contentContentType").value(DEFAULT_CONTENT_CONTENT_TYPE))
+            .andExpect(jsonPath("$.content").value(Base64Utils.encodeToString(DEFAULT_CONTENT)));
     }
 
     @Test
@@ -218,7 +226,8 @@ public class PostResourceIT {
         em.detach(updatedPost);
         updatedPost
             .title(UPDATED_TITLE)
-            .content(UPDATED_CONTENT);
+            .content(UPDATED_CONTENT)
+            .contentContentType(UPDATED_CONTENT_CONTENT_TYPE);
 
         restPostMockMvc.perform(put("/api/posts")
             .contentType(MediaType.APPLICATION_JSON)
@@ -231,6 +240,7 @@ public class PostResourceIT {
         Post testPost = postList.get(postList.size() - 1);
         assertThat(testPost.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testPost.getContent()).isEqualTo(UPDATED_CONTENT);
+        assertThat(testPost.getContentContentType()).isEqualTo(UPDATED_CONTENT_CONTENT_TYPE);
     }
 
     @Test
