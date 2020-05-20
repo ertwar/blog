@@ -1,0 +1,33 @@
+{
+    "name": "Tag",
+    "fields": [
+        {
+            "fieldName": "tagtext",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "post",
+            "otherEntityRelationshipName": "tag",
+            "relationshipName": "post",
+            "otherEntityField": "title",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20200520210600",
+    "entityTableName": "tag",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

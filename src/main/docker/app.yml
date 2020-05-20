@@ -6,7 +6,9 @@ services:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,swagger
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://blog-postgresql:5432/blog
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://blog-postgresql:15432/blog
+      - SPRING_DATASOURCE_USERNAME=blog
+      - SPRING_DATASOURCE_PASSWORD=g0g0g0g0g0
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     ports:
       - 8080:8080

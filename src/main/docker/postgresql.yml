@@ -6,6 +6,6 @@ services:
     #     - ~/volumes/jhipster/blog/postgresql/:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=blog
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=g0g0g0g0g0
     ports:
-      - 5432:5432
+      - 15432:5432
